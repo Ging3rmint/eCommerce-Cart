@@ -8,7 +8,9 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {getFromCart} from "./redux/actions/cartActions";
 
+
 store.dispatch(getFromCart())
+
 
 ReactDOM.render(
   <Provider store={store}>

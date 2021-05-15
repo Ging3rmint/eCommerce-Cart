@@ -4,6 +4,7 @@ import {Col, Row} from 'react-bootstrap'
 import Product from '../components/Product';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
+import PageBanner from '../components/molecules/PageBanner/PageBanner'
 import {listProducts} from '../redux/actions/productActions'
 
 const HomeScreen = () => {
@@ -18,7 +19,7 @@ const HomeScreen = () => {
 
     return (
         <>
-            <h1>Latest Products</h1>
+            <PageBanner title="All Product"/>
             {loading? <Loader/>
             : error? <Message variant='danger'>{error}</Message>
             :<Row>

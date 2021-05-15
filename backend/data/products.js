@@ -71,6 +71,55 @@ const products = [
     rating: 4,
     numReviews: 12,
   },
+  {
+    name: 'YX 1 Earphones',
+    image: '/images/earphone.jpg',
+    description:
+      'Tailor your listening experience with bespoke dynamic drivers from the new YX1 Wireless Earphones. Enjoy incredible high-fidelity sound even in noisy environments with its active noise cancellation feature.',
+    brand: 'Audiophile',
+    category: 'Electronics',
+    price: 599,
+    countInStock: 10,
+    rating: 3,
+    numReviews: 122,
+  },
+  {
+    name: 'XX99 Mark II Headphones',
+    image: '/images/headphone.jpg',
+    description:
+      'The new XX99 Mark II headphones is the pinnacle of pristine audio. It redefines your premium headphone experience by reproducing the balanced depth and precision of studio-quality sound.',
+    brand: 'Audiophile',
+    category: 'Electronics',
+    price: 2999,
+    countInStock: 10,
+    rating: 5,
+    numReviews: 1022,
+  },
+  {
+    name: 'ZX9 Speaker',
+    image: '/images/speaker.jpg',
+    description:
+      'Upgrade your sound system with the all new ZX9 active speaker. It’s a bookshelf speaker system that offers truly wireless connectivity -- creating new possibilities for more pleasing and practical audio setups.',
+    brand: 'Audiophile',
+    category: 'Electronics',
+    price: 5000,
+    countInStock: 10,
+    rating: 5,
+    numReviews: 3201,
+  },
+  {
+    name: "PlayStation 5",
+    image:
+      "https://images.unsplash.com/photo-1606813907291-d86efa9b94db?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1352&q=80",
+    description:
+      "PlayStation 5 (PS5) is a home video game console developed by Sony Interactive Entertainment. Announced in 2019 as the successor to the PlayStation 4, the PS5 was released on November 12, 2020 in Australia, Japan, New Zealand, North America, Singapore, and South Korea, and November 19, 2020 onwards in other major markets except China and India.",
+    brand: 'Sony',
+    category: 'Electronics',
+    price: 599,
+    rating: 5,
+    countInStock: 0,
+    numReviews: 7123,
+  }
 ]
 
 export default products

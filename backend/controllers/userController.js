@@ -29,8 +29,8 @@ const authUser = asyncHandler  (async (req, res) => {
 //@route POST /api/users
 //@access Public
 const registerUser = asyncHandler  (async (req, res) => {
-    const {name, email, password} = req.body
-
+    const {name, email, password, shippingAddress} = req.body
+    console.log(shippingAddress);
     const userExist = await User.findOne({email})
 
     if (userExist){
@@ -41,7 +41,8 @@ const registerUser = asyncHandler  (async (req, res) => {
     const user = await User.create({
         name,
         email,
-        password
+        password,
+        shippingAddress
     })
 
     if (user) {
@@ -69,7 +70,8 @@ const getUserProfile = asyncHandler  (async (req, res) => {
             _id: user._id,
             name: user.name,
             email: user.email,
-            isAdmin: user.isAdmin
+            isAdmin: user.isAdmin,
+            shippingAddress: user.shippingAddress
         })
     }else{
         res.status(401)
@@ -77,5 +79,86 @@ const getUserProfile = asyncHandler  (async (req, res) => {
     }
 })
 
+//@desc Update user profile
+//@route PUT /api/users/profile
+//@access Private
+const updateUserProfile = asyncHandler  (async (req, res) => {
+    const user = await User.findById(req.user._id)
 
-export {authUser, registerUser, getUserProfile}
+    if (user) {
+        user.name = req.body.name || user.name
+        user.email = req.body.email || user.email
+        user.shippingAddress = req.body.shippingAddress || user.shippingAddress
+
+        if (req.body.password){
+            user.password = req.body.password
+        }
+
+        const updatedUser = await user.save()
+
+        res.json({
+            _id: updatedUser._id,
+            name: updatedUser.name,
+            email: updatedUser.email,
+            isAdmin: updatedUser.isAdmin,
+            shippingAddres: updatedUser.shippinhAddress,
+            token: generateToken(user._id)
+        })
+
+    }else{
+        res.status(401)
+        throw new Error('User not found') //from asyncHandler 
+    }
+})
+
+//@desc Create user session in mongodb (valid for 3 hours)
+//@route POST /api/users/session
+//@access Private
+const setUserSessionInfo = async (req, res) => {
+    req.session.userSession = req.body
+    res.status(201)
+    res.send(req.session.userSession)
+}
+
+//@desc GET user session in mongodb (valid for 3 hours)
+//@route GET /api/users/session
+//@access Private
+const getUserSessionInfo = async (req, res) => {
+    const userSession = req.session.userSession? req.session.userSession : {}
+    res.send(userSession)
+}
+
+//@desc update user shippingAddress 
+//@route PUT /api/users/checkout
+//@access Private
+const updateUserShippingAddress = asyncHandler (async (req,res) => {
+    const user = await User.findById(req.user._id)
+
+    if (user) {
+        const {address, city, postalCode, country} = req.body
+        
+        user.shippingAddress = {
+            address,
+            city,
+            postalCode,
+            country
+        }
+
+        const updatedUser = await user.save()
+        res.status(201)
+
+        res.json({
+            _id: updatedUser._id,
+            name: updatedUser.name,
+            email: updatedUser.email,
+            isAdmin: updatedUser.isAdmin,
+            shippingAddres: updatedUser.shippinhAddress,
+            token: generateToken(user._id)
+        })
+    }else{
+        res.status(401)
+        throw new Error('User not found') //from asyncHandler 
+    }
+})
+
+export {authUser, registerUser, getUserProfile, updateUserProfile, updateUserShippingAddress, setUserSessionInfo, getUserSessionInfo}

@@ -5,7 +5,7 @@ export const addToCart = (id, qty) => async (dispatch, getState) => {
     const {data} = await axios.get(`/api/products/${id}`) // get data from target product
 
     dispatch({
-        type: actionTypes.CART_ADD_ITEM, //add product data 
+        type: actionTypes.CART_ADD_ITEM, //add a product data to cart item
         payload:{
             product: data._id,
             name: data.name,
@@ -16,8 +16,7 @@ export const addToCart = (id, qty) => async (dispatch, getState) => {
         }
     })
 
-    await axios.post('/api/cart', getState().cart.cartItems)
-    // localStorage.setItem('cartItems', JSON.stringify(getState().cart.cartItems)) //axios to api/cart
+    await axios.post('/api/cart', getState().cart.cartItems) //post all item to api
 }
 
 export const getFromCart = () => async (dispatch) => {
@@ -51,5 +50,14 @@ export const removeFromCart = (id) => async (dispatch, getState) => {
 
     await axios.post('/api/cart', getState().cart.cartItems)
 
-    // localStorage.setItem('cartItems', JSON.stringify(getState().cart.cartItems))
+}
+
+export const savePaymentMethod = (data) => async (dispatch) => {
+
+    dispatch({
+        type: actionTypes.CART_SAVE_PAYMENT_METHOD,
+        payload: data
+    })
+
+    localStorage.setItem('paymentMethod', JSON.stringify(data))
 }

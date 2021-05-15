@@ -7,6 +7,7 @@ import Loader from '../components/Loader'
 import Message from '../components/Message'
 import {listProductDetails} from '../redux/actions/productActions'
 import {addToCart} from '../redux/actions/cartActions'
+import PageBanner from '../components/molecules/PageBanner/PageBanner'
 
 const ProductScreen = ({history, match}) => {
     const [qty, setQty] = useState(1)
@@ -20,18 +21,17 @@ const ProductScreen = ({history, match}) => {
     },[dispatch, match])
 
     const addToCartHandler = () => {
-        dispatch(addToCart(match.params.id, qty))
+        dispatch(addToCart(match.params.id, qty)) //update and add into global cart state
         history.push(`/cart/${match.params.id}?qty=${qty}`)
     }
 
     return <>
+    <PageBanner title="PRODUCT DETAIL"/>
     <Link className='btn btn-light my-3' to='/'>Go Back</Link>
     {loading? <Loader/> : error? <Message variant='danger'>{error}</Message>: 
         <Row>
-            <Col md={6}>
+            <Col md={9}>
                 <Image src={product.image} alt={product.name} fluid/>
-            </Col>
-            <Col md={3}>
                 <ListGroup variant='flush'>
                     <ListGroup.Item>
                         <h3>{product.name}</h3>

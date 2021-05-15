@@ -23,8 +23,23 @@ const userSchema = mongoose.Schema({
         type: Boolean,
         required: true,
         default: false
+    },
+    shippingAddress: {
+        address: {type: String, required: true},
+        city: {type: String, required: true},
+        postalCode: {type: String, required: true},
+        country: {type: String, required: true},
+    },
+    cartItems:{
+        name: { type: String},
+        qty: { type: Number},
+        image: { type: String},
+        price: { type: Number},
+        product: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Product'
+        }
     }
-
 },{
     timestamps: true
 })

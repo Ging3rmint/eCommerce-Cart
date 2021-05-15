@@ -1,9 +1,10 @@
-import React from 'react'
+import React,{useEffect} from 'react'
 import {Link} from 'react-router-dom'
 import {useDispatch, useSelector} from 'react-redux'
 import {Row, Col, ListGroup, Image, Form, Button, Card} from 'react-bootstrap'
 import Message from '../components/Message'
-import {addToCart, removeFromCart} from '../redux/actions/cartActions'
+import {addToCart, removeFromCart, getFromCart} from '../redux/actions/cartActions'
+import PageBanner from '../components/molecules/PageBanner/PageBanner'
 
 const CartScreen = ({history}) => {
     const dispatch = useDispatch()
@@ -16,13 +17,18 @@ const CartScreen = ({history}) => {
     }
 
     const checkoutHandler = () => {
-        history.push('/login?redirect=shipping')
+        history.push('/login?redirect=checkout')
     }
     
+    useEffect(()=>{
+        dispatch(getFromCart())
+    },[dispatch])
+
     return <Row>
+        <PageBanner title="CART"/>
+
         <Col md={8}>
             <h1>Shopping Cart</h1>
-
             {!loading && cartItems.length === 0? <Message>Your cart is empty <Link to='/'>Go Back</Link></Message>
             : <ListGroup variant='flush'>
                 {cartItems.map(item => (
@@ -55,7 +61,7 @@ const CartScreen = ({history}) => {
                 
                 }
         </Col>
-        <Col md={4}>
+        <Col style={{marginTop: '16px'}} md={4}>
             <Card>
                 <ListGroup variant='flush'>
                     <ListGroup.Item>
